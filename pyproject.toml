@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "emkademy"
 version = "0.1.0"
-description = ""
+description = "Cyber-bullying Detection on Social Media"
 authors = ["Kıvanç Yüksel <emkademy@gmail.com>"]
 readme = "README.md"
 
@@ -9,8 +9,21 @@ readme = "README.md"
 python = ">=3.10,<3.11"
 hydra-core = "~=1.3.2"
 pydantic = "~=1.10.7"
+pandas = "~=2.0"
+nltk = "~=3.8"
+symspellpy = "~=6.7"
+fsspec = {version = "~=2023.5", extras = ["gcs"]}
+gcsfs = "~=2023.5"
+google-cloud-secret-manager = "~=2.16"
+fastparquet = "~=2023.4"
+dvc = {version = "~=2.56", extras = ["gdrive", "gs"]}
+dask = {version = "~=2023.5", extras = ["complete"]}
+distributed = "~=2023.5"
+dask-cloudprovider = {version = "2022.10", extras=["gcp"]}
+dask-ml = "~=2023.3"
 
 [tool.poetry.group.dev.dependencies]
+jupyterlab = "~=3.6"
 pytest = "~=7.3"
 black = "~=23.3"
 isort = "~=5.12"
