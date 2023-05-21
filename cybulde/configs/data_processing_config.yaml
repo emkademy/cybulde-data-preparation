@@ -1,5 +1,5 @@
 defaults:
-  - config_schema
+  - data_processing_config_schema
 
   - override hydra/job_logging: custom
   - override hydra/hydra_logging: disabled
@@ -9,3 +9,5 @@ hydra:
   output_subdir: null
   run:
     dir: .
+
+version: v3
