@@ -1,0 +1,6 @@
+defaults:
+  - ghc_dataset_reader_schema
+
+dataset_dir: ${data_local_save_dir}/ghc
+dataset_name: ghc
+dev_split_ratio: 0.3
