@@ -1,0 +1,4 @@
+defaults:
+  - character_limiter_dataset_cleaner_schema
+
+character_limit: 280

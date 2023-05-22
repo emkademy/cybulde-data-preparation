@@ -1,0 +1,13 @@
+defaults:
+  - dataset_cleaner_manager_schema
+
+  - dataset_cleaner@dataset_cleaners.stop_words: stop_words_dataset_cleaner_schema
+  - dataset_cleaner@dataset_cleaners.to_lower_case: to_lower_case_dataset_cleaner_schema
+  - dataset_cleaner@dataset_cleaners.url: url_dataset_cleaner_schema
+  - dataset_cleaner@dataset_cleaners.punctuation: punctuation_dataset_cleaner_schema
+  - dataset_cleaner@dataset_cleaners.non_letters: non_letters_dataset_cleaner_schema
+  - dataset_cleaner@dataset_cleaners.new_line: new_line_character_dataset_cleaner_schema
+  - dataset_cleaner@dataset_cleaners.non_ascii: non_ascii_dataset_cleaner_schema
+  - dataset_cleaner@dataset_cleaners.referance: referance_to_account_dataset_cleaner_schema
+  - dataset_cleaner@dataset_cleaners.re_tweet: re_tweet_dataset_cleaner_schema
+  - dataset_cleaner@dataset_cleaners.spell_correction: spell_correction_dataset_cleaner_schema
