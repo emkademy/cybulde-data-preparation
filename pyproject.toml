@@ -42,7 +42,6 @@ types-six = "~=1.16.21.8"
 types-typed-ast = "~=1.5.8.6" 
 types-urllib3 = "~=1.26.25.13"
 
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
