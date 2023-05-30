@@ -3,3 +3,5 @@ defaults:
   - dataset_reader@dataset_readers.ghc: ghc
   - dataset_reader@dataset_readers.jtc: jtc
   - dataset_reader@dataset_readers.twitter: twitter
+
+available_memory: 3.75e9

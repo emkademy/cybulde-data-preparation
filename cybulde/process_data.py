@@ -10,8 +10,6 @@ from hydra.utils import instantiate
 from cybulde.config_schemas.data_processing.dataset_cleaners_schema import DatasetCleanerManagerConfig
 from cybulde.config_schemas.data_processing_config_schema import DataProcessingConfig
 from cybulde.utils.config_utils import custom_instantiate, get_pickle_config
-from cybulde.utils.data_utils import get_raw_data_with_version
-from cybulde.utils.gcp_utils import access_secret_version
 from cybulde.utils.io_utils import open_file
 from cybulde.utils.utils import get_logger
 
@@ -34,19 +32,6 @@ def process_data(config: DataProcessingConfig) -> None:
     client = Client(cluster)  # type: ignore
 
     try:
-        github_access_token = access_secret_version(
-            config.infrastructure.project_id, config.github_access_token_secret_id
-        )
-
-        get_raw_data_with_version(
-            version=config.version,
-            data_local_save_dir=config.data_local_save_dir,
-            dvc_remote_repo=config.dvc_remote_repo,
-            dvc_data_folder=config.dvc_data_folder,
-            github_user_name=config.github_user_name,
-            github_access_token=github_access_token,
-        )
-
         dataset_reader_manager = instantiate(config.dataset_reader_manager)
         dataset_cleaner_manager = instantiate(config.dataset_cleaner_manager)
 

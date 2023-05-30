@@ -62,12 +62,14 @@ def get_raw_data_with_version(
 def get_nrof_partitions(
     df_memory_usage: int,
     nrof_workers: int,
-    available_memory: Optional[int],
+    available_memory: Optional[float],
     min_partition_size: int,
     aimed_nrof_partitions_per_worker: int,
 ) -> int:
     if available_memory is None:
         available_memory = psutil.virtual_memory().available
+    else:
+        available_memory = available_memory * nrof_workers
 
     if df_memory_usage <= min_partition_size:
         return 1
@@ -95,7 +97,7 @@ def get_nrof_partitions(
 def repartition_dataframe(
     df: dd.core.DataFrame,
     nrof_workers: int,
-    available_memory: Optional[int] = None,
+    available_memory: Optional[float] = None,
     min_partition_size: int = 15 * 1024**2,
     aimed_nrof_partitions_per_worker: int = 10,
 ) -> dd.core.DataFrame:

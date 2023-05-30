@@ -106,7 +106,7 @@ def save_config_as_pickle(config: Any, save_path: str) -> None:
 def custom_instantiate(config: Any) -> Any:
     config_as_dict = asdict(config)
     if "_target_" not in config_as_dict:
-        raise ValueError("'config' has to have '_target_' key in order to be instantiated...")
+        raise ValueError("Config does not have _target_ key")
 
     _target_ = config_as_dict["_target_"]
     _partial_ = config_as_dict.get("_partial_", False)

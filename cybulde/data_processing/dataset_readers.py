@@ -218,14 +218,20 @@ class TwitterDatasetReader(DatasetReader):
 
 
 class DatasetReaderManager:
-    def __init__(self, dataset_readers: dict[str, DatasetReader], repartition: bool = True) -> None:
+    def __init__(
+        self,
+        dataset_readers: dict[str, DatasetReader],
+        repartition: bool = True,
+        available_memory: Optional[float] = None,
+    ) -> None:
         self.dataset_readers = dataset_readers
         self.repartition = repartition
+        self.available_memory = available_memory
 
     def read_data(self, nrof_workers: int) -> dd.core.DataFrame:
         dfs = [dataset_reader.read_data() for dataset_reader in self.dataset_readers.values()]
         df: dd.core.DataFrame = dd.concat(dfs)  # type: ignore
         if self.repartition:
-            df = repartition_dataframe(df, nrof_workers=nrof_workers)
+            df = repartition_dataframe(df, nrof_workers=nrof_workers, available_memory=self.available_memory)
 
         return df

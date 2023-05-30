@@ -43,6 +43,7 @@ dataset_reader_manager:
       dev_split_ratio: 0.25
       test_split_ratio: 0.2
   repartition: true
+  available_memory: 3750000000.0
 dataset_cleaner_manager:
   _target_: cybulde.data_processing.dataset_cleaners.DatasetCleanerManager
   dataset_cleaners:
@@ -73,22 +74,8 @@ dataset_cleaner_manager:
         prefix_length: 7
         count_threshold: 1
 dask_cluster:
-  _target_: dask.distributed.LocalCluster
-  n_workers: 12
-  memory_limit: auto
-  processes: true
-  threads_per_worker: 1
-  scheduler_port: 8786
-  silence_logs: 30
-  host: null
-  dashboard_address: :8787
-  asynchronous: false
-  blocked_handlers: null
-  service_kwargs: null
-  security: null
-  protocol: null
-  interface: null
-  worker_class: null
+  _target_: dask_cloudprovider.gcp.GCPCluster
+  n_workers: 1
 processed_data_save_dir: ./data/processed
 docker_image_name: europe-west4-docker.pkg.dev/emkademy/cybulde/cybulde-data-processing
-docker_image_tag: 4c3518cb-7b01-4d80-8f34-bb5f249be71b
+docker_image_tag: 01c114aa-2540-449b-94e8-28fc3c6ec658

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from hydra.core.config_store import ConfigStore
 from omegaconf import MISSING, SI
 from pydantic.dataclasses import dataclass
@@ -39,6 +41,7 @@ class DatasetReaderManagerConfig:
     _target_: str = "cybulde.data_processing.dataset_readers.DatasetReaderManager"
     dataset_readers: dict[str, DatasetReaderConfig] = MISSING
     repartition: bool = True
+    available_memory: Optional[float] = None
 
 
 def setup_config() -> None:
