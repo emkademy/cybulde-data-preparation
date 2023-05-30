@@ -24,6 +24,8 @@ class DataProcessingConfig:
 
     processed_data_save_dir: str = MISSING
 
+    run_tag: str = "default_run"
+
     docker_image_name: str = MISSING
     docker_image_tag: str = MISSING
 

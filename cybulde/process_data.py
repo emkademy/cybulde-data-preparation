@@ -10,7 +10,7 @@ from hydra.utils import instantiate
 from cybulde.config_schemas.data_processing.dataset_cleaners_schema import DatasetCleanerManagerConfig
 from cybulde.config_schemas.data_processing_config_schema import DataProcessingConfig
 from cybulde.utils.config_utils import custom_instantiate, get_pickle_config
-from cybulde.utils.io_utils import open_file
+from cybulde.utils.io_utils import write_yaml_file
 from cybulde.utils.utils import get_logger
 
 
@@ -55,8 +55,8 @@ def process_data(config: DataProcessingConfig) -> None:
 
         docker_info = {"docker_image": config.docker_image_name, "docker_tag": config.docker_image_tag}
         docker_info_save_path = os.path.join(processed_data_save_dir, "docker_info.yaml")
-        with open_file(docker_info_save_path, "w") as f:
-            f.write(docker_info)
+
+        write_yaml_file(docker_info_save_path, docker_info)
 
         logger.info("Data processing finished!")
 

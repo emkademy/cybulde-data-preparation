@@ -75,7 +75,36 @@ dataset_cleaner_manager:
         count_threshold: 1
 dask_cluster:
   _target_: dask_cloudprovider.gcp.GCPCluster
-  n_workers: 1
-processed_data_save_dir: ./data/processed
+  n_workers: 3
+  projectid: emkademy
+  zone: europe-west4-b
+  network: default
+  network_projectid: emkademy
+  machine_type: n1-standard-1
+  source_image: projects/ubuntu-os-cloud/global/images/ubuntu-minimal-2004-focal-v20220203
+  docker_image: europe-west4-docker.pkg.dev/emkademy/cybulde/cybulde-data-processing:7925ba8a-6d18-4f9c-87cc-10b675ec2a3f
+  docker_args: '--log-driver=gcplogs
+
+    '
+  extra_bootstrap:
+  - gcloud auth configure-docker --quiet europe-west4-docker.pkg.dev
+  ngpus: 0
+  gpu_type: null
+  filesystem_size: 50
+  disk_type: pd-standard
+  on_host_maintenance: TERMINATE
+  worker_class: dask.distributed.Nanny
+  worker_options:
+    nthreads: 1
+  env_vars: {}
+  scheduler_options: {}
+  silence_logs: null
+  asynchronous: null
+  security: true
+  preemptible: false
+  debug: false
+  instance_labels: null
+processed_data_save_dir: gs://cybulde/data/processed/default_run
+run_tag: default_run
 docker_image_name: europe-west4-docker.pkg.dev/emkademy/cybulde/cybulde-data-processing
-docker_image_tag: 01c114aa-2540-449b-94e8-28fc3c6ec658
+docker_image_tag: 7925ba8a-6d18-4f9c-87cc-10b675ec2a3f
