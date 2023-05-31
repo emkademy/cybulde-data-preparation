@@ -163,11 +163,13 @@ class JigsawToxicCommentsDatasetReader(DatasetReader):
         test_df = test_df[test_df["toxic"] != -1]
 
         test_df = self.get_text_and_label_columns(test_df)
+        to_train_df, test_df = self.split_dataset(test_df, 0.1, stratify_column="label")
 
         train_csv_path = os.path.join(self.dataset_dir, "train.csv")
         train_csv_url = self.get_remote_data_url(train_csv_path)
         train_df = dd.read_csv(train_csv_url)
         train_df = self.get_text_and_label_columns(train_df)
+        train_df = dd.concat([train_df, to_train_df])  # type: ignore
 
         train_df, dev_df = self.split_dataset(train_df, self.dev_split_ratio, stratify_column="label")
 

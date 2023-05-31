@@ -2,7 +2,7 @@ defaults:
   - data_processing_config_schema
   - dataset_reader_manager: ghc_jigsaw_twitter
   - dataset_cleaner_manager: simple_dataset_cleaner
-  - dask_cluster: gcp_dask_cluster
+  - dask_cluster: local_dask_cluster
 
   - override hydra/job_logging: custom
   - override hydra/hydra_logging: disabled

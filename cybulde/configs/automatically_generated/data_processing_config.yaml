@@ -30,7 +30,7 @@ dataset_reader_manager:
       dvc_remote_repo: https://github.com/emkademy/cybulde-data.git
       github_user_name: emkademy
       version: v3
-      dev_split_ratio: 0.06
+      dev_split_ratio: 0.03
     twitter:
       _target_: cybulde.data_processing.dataset_readers.TwitterDatasetReader
       dataset_dir: ./data/raw/twitter
@@ -40,10 +40,10 @@ dataset_reader_manager:
       dvc_remote_repo: https://github.com/emkademy/cybulde-data.git
       github_user_name: emkademy
       version: v3
-      dev_split_ratio: 0.25
-      test_split_ratio: 0.2
+      dev_split_ratio: 0.125
+      test_split_ratio: 0.1
   repartition: true
-  available_memory: 3750000000.0
+  available_memory: null
 dataset_cleaner_manager:
   _target_: cybulde.data_processing.dataset_cleaners.DatasetCleanerManager
   dataset_cleaners:
@@ -74,37 +74,23 @@ dataset_cleaner_manager:
         prefix_length: 7
         count_threshold: 1
 dask_cluster:
-  _target_: dask_cloudprovider.gcp.GCPCluster
-  n_workers: 3
-  projectid: emkademy
-  zone: europe-west4-b
-  network: default
-  network_projectid: emkademy
-  machine_type: n1-standard-1
-  source_image: projects/ubuntu-os-cloud/global/images/ubuntu-minimal-2004-focal-v20220203
-  docker_image: europe-west4-docker.pkg.dev/emkademy/cybulde/cybulde-data-processing:7925ba8a-6d18-4f9c-87cc-10b675ec2a3f
-  docker_args: '--log-driver=gcplogs
-
-    '
-  extra_bootstrap:
-  - gcloud auth configure-docker --quiet europe-west4-docker.pkg.dev
-  ngpus: 0
-  gpu_type: null
-  filesystem_size: 50
-  disk_type: pd-standard
-  on_host_maintenance: TERMINATE
-  worker_class: dask.distributed.Nanny
-  worker_options:
-    nthreads: 1
-  env_vars: {}
-  scheduler_options: {}
-  silence_logs: null
-  asynchronous: null
-  security: true
-  preemptible: false
-  debug: false
-  instance_labels: null
-processed_data_save_dir: gs://cybulde/data/processed/default_run
-run_tag: default_run
+  _target_: dask.distributed.LocalCluster
+  n_workers: 12
+  memory_limit: auto
+  processes: true
+  threads_per_worker: 1
+  scheduler_port: 8786
+  silence_logs: 30
+  host: null
+  dashboard_address: :8787
+  asynchronous: false
+  blocked_handlers: null
+  service_kwargs: null
+  security: null
+  protocol: null
+  interface: null
+  worker_class: null
+processed_data_save_dir: gs://cybulde/data/processed/rebalanced_splits
+run_tag: rebalanced_splits
 docker_image_name: europe-west4-docker.pkg.dev/emkademy/cybulde/cybulde-data-processing
-docker_image_tag: 7925ba8a-6d18-4f9c-87cc-10b675ec2a3f
+docker_image_tag: e34b2acb-f7e9-4f11-854b-da20f615bf0e
