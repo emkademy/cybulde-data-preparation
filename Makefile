@@ -19,7 +19,7 @@ DIRS_TO_VALIDATE = cybulde
 DOCKER_COMPOSE_RUN = $(DOCKER_COMPOSE_COMMAND) run --rm $(SERVICE_NAME)
 DOCKER_COMPOSE_EXEC = $(DOCKER_COMPOSE_COMMAND) exec $(SERVICE_NAME)
 
-LOCAL_DOCKER_IMAGE_TAG = cybulde-data-processing
+LOCAL_DOCKER_IMAGE_NAME = cybulde-data-processing
 GCP_DOCKER_IMAGE_NAME = europe-west4-docker.pkg.dev/emkademy/cybulde/cybulde-data-processing
 GCP_DOCKER_IMAGE_TAG := $(strip $(shell uuidgen))
 
@@ -52,7 +52,7 @@ temp-local-process-data: generate-final-data-processing-config
 ## Push docker image to GCP artifact registery
 push: build
 	gcloud auth configure-docker --quiet europe-west4-docker.pkg.dev
-	docker tag $(LOCAL_DOCKER_IMAGE_TAG):latest "$(GCP_DOCKER_IMAGE_NAME):$(GCP_DOCKER_IMAGE_TAG)"
+	docker tag $(LOCAL_DOCKER_IMAGE_NAME):latest "$(GCP_DOCKER_IMAGE_NAME):$(GCP_DOCKER_IMAGE_TAG)"
 	docker push "$(GCP_DOCKER_IMAGE_NAME):$(GCP_DOCKER_IMAGE_TAG)"
 
 ## Starts jupyter lab
