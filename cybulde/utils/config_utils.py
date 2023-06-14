@@ -17,7 +17,7 @@ from hydra import compose, initialize
 from hydra.types import TaskFunction
 from omegaconf import DictConfig, OmegaConf
 
-from cybulde.config_schemas import data_processing_config_schema
+from cybulde.config_schemas import data_processing_config_schema, tokenizer_training_config_schema
 from cybulde.utils.io_utils import open_file
 
 
@@ -58,6 +58,7 @@ def load_pickle_config(config_path: str, config_name: str) -> Any:
 
 def setup_config() -> None:
     data_processing_config_schema.setup_config()
+    tokenizer_training_config_schema.setup_config()
 
 
 def setup_logger() -> None:

@@ -1,0 +1,17 @@
+defaults:
+  - tokenizer_training_config_schema
+
+  - tokenizer: bpe_tokenizer
+
+  - override hydra/job_logging: custom
+  - override hydra/hydra_logging: disabled
+
+  - _self_
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+
+data_parquet_path: gs://cybulde/data/processed/rebalanced_splits/train.parquet
+text_column_name: cleaned_text
