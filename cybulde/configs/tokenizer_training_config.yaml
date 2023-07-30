@@ -13,5 +13,5 @@ hydra:
   run:
     dir: .
 
-data_parquet_path: gs://cybulde/data/processed/rebalanced_splits/train.parquet
+data_parquet_path: gs://emkademy/cybulde/data/processed/rebalanced_splits/train.parquet
 text_column_name: cleaned_text
