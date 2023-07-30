@@ -15,4 +15,4 @@ hydra:
     dir: .
 
 version: v3
-processed_data_save_dir: gs://cybulde/data/processed/${run_tag}
+processed_data_save_dir: gs://emkademy/cybulde/data/processed/${run_tag}

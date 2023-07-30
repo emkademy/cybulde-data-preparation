@@ -20,7 +20,7 @@ DOCKER_COMPOSE_RUN = $(DOCKER_COMPOSE_COMMAND) run --rm $(SERVICE_NAME)
 DOCKER_COMPOSE_EXEC = $(DOCKER_COMPOSE_COMMAND) exec $(SERVICE_NAME)
 
 LOCAL_DOCKER_IMAGE_NAME = cybulde-data-processing
-GCP_DOCKER_IMAGE_NAME = europe-west4-docker.pkg.dev/emkademy/cybulde/cybulde-data-processing
+GCP_DOCKER_IMAGE_NAME = europe-west4-docker.pkg.dev/cybulde/cybulde/cybulde-data-processing
 GCP_DOCKER_IMAGE_TAG := $(strip $(shell uuidgen))
 
 export

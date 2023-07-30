@@ -4,7 +4,7 @@ from pydantic.dataclasses import dataclass
 
 @dataclass
 class GCPConfig:
-    project_id: str = "emkademy"
+    project_id: str = "cybulde"
     zone: str = "europe-west4-b"
     network: str = "default"
 
