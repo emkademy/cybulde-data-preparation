@@ -10,6 +10,7 @@ from hydra.utils import instantiate
 from cybulde.config_schemas.data_processing.dataset_cleaners_schema import DatasetCleanerManagerConfig
 from cybulde.config_schemas.data_processing_config_schema import DataProcessingConfig
 from cybulde.utils.config_utils import custom_instantiate, get_pickle_config
+from cybulde.utils.data_utils import filter_based_on_minimum_number_of_words
 from cybulde.utils.io_utils import write_yaml_file
 from cybulde.utils.utils import get_logger
 
@@ -49,9 +50,17 @@ def process_data(config: DataProcessingConfig) -> None:
         dev_parquet_path = os.path.join(processed_data_save_dir, "dev.parquet")
         test_parquet_path = os.path.join(processed_data_save_dir, "test.parquet")
 
-        df[df["split"] == "train"].to_parquet(train_parquet_path)
-        df[df["split"] == "dev"].to_parquet(dev_parquet_path)
-        df[df["split"] == "test"].to_parquet(test_parquet_path)
+        train_df = df[df["split"] == "train"]
+        dev_df = df[df["split"] == "dev"]
+        test_df = df[df["split"] == "test"]
+
+        train_df = filter_based_on_minimum_number_of_words(train_df, min_nrof_words=config.min_nrof_words)
+        dev_df = filter_based_on_minimum_number_of_words(dev_df, min_nrof_words=config.min_nrof_words)
+        test_df = filter_based_on_minimum_number_of_words(test_df, min_nrof_words=config.min_nrof_words)
+
+        train_df.to_parquet(train_parquet_path)
+        dev_df.to_parquet(dev_parquet_path)
+        test_df.to_parquet(test_parquet_path)
 
         docker_info = {"docker_image": config.docker_image_name, "docker_tag": config.docker_image_tag}
         docker_info_save_path = os.path.join(processed_data_save_dir, "docker_info.yaml")

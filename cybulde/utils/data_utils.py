@@ -3,6 +3,7 @@ from typing import Optional
 
 import dask.dataframe as dd
 import psutil
+import pandas as pd
 
 from cybulde.utils.gcp_utils import access_secret_version
 from cybulde.utils.utils import run_shell_command
@@ -115,3 +116,8 @@ def get_repo_address_with_access_token(
     access_token = access_secret_version(gcp_project_id, gcp_secret_id)
     repo_address = repo_address.replace("https://", "")
     return f"https://{user_name}:{access_token}@{repo_address}"
+
+
+def filter_based_on_minimum_number_of_words(df: pd.DataFrame, min_nrof_words: int) -> pd.DataFrame:
+    return df[df["cleaned_text"].str.split().apply(len) >= min_nrof_words]
+

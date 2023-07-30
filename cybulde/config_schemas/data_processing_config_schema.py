@@ -29,6 +29,8 @@ class DataProcessingConfig:
     docker_image_name: str = MISSING
     docker_image_tag: str = MISSING
 
+    min_nrof_words: int = 2
+
 
 def setup_config() -> None:
     gcp_schema.setup_config()
