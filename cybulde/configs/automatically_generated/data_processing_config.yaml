@@ -1,0 +1,96 @@
+version: v3
+data_local_save_dir: ./data/raw
+dvc_remote_repo: https://github.com/emkademy/cybulde-data.git
+dvc_data_folder: data/raw
+github_user_name: emkademy
+github_access_token_secret_id: cybulde-data-github-access-token
+infrastructure:
+  project_id: cybulde
+  zone: europe-west4-b
+  network: default
+dataset_reader_manager:
+  _target_: cybulde.data_processing.dataset_readers.DatasetReaderManager
+  dataset_readers:
+    ghc:
+      _target_: cybulde.data_processing.dataset_readers.GHCDatasetReader
+      dataset_dir: ./data/raw/ghc
+      dataset_name: ghc
+      gcp_project_id: cybulde
+      gcp_github_access_token_secret_id: cybulde-data-github-access-token
+      dvc_remote_repo: https://github.com/emkademy/cybulde-data.git
+      github_user_name: emkademy
+      version: v3
+      dev_split_ratio: 0.3
+    jtc:
+      _target_: cybulde.data_processing.dataset_readers.JigsawToxicCommentsDatasetReader
+      dataset_dir: ./data/raw/jigsaw-toxic-comment
+      dataset_name: jtc
+      gcp_project_id: cybulde
+      gcp_github_access_token_secret_id: cybulde-data-github-access-token
+      dvc_remote_repo: https://github.com/emkademy/cybulde-data.git
+      github_user_name: emkademy
+      version: v3
+      dev_split_ratio: 0.03
+    twitter:
+      _target_: cybulde.data_processing.dataset_readers.TwitterDatasetReader
+      dataset_dir: ./data/raw/twitter
+      dataset_name: twitter
+      gcp_project_id: cybulde
+      gcp_github_access_token_secret_id: cybulde-data-github-access-token
+      dvc_remote_repo: https://github.com/emkademy/cybulde-data.git
+      github_user_name: emkademy
+      version: v3
+      dev_split_ratio: 0.125
+      test_split_ratio: 0.1
+  repartition: true
+  available_memory: null
+dataset_cleaner_manager:
+  _target_: cybulde.data_processing.dataset_cleaners.DatasetCleanerManager
+  dataset_cleaners:
+    stop_words:
+      _target_: cybulde.data_processing.dataset_cleaners.StopWordsDatasetCleaner
+    to_lower_case:
+      _target_: cybulde.data_processing.dataset_cleaners.ToLowerCaseDatasetCleaner
+    url:
+      _target_: cybulde.data_processing.dataset_cleaners.URLDatasetCleaner
+    punctuation:
+      _target_: cybulde.data_processing.dataset_cleaners.PunctuationDatasetCleaner
+      punctuation: '!"#$%&''()*+,-./:;<=>?@[\]^_`{|}~'
+    non_letters:
+      _target_: cybulde.data_processing.dataset_cleaners.NonLettersDatasetCleaner
+    new_line:
+      _target_: cybulde.data_processing.dataset_cleaners.NewLineCharacterDatasetCleaner
+    non_ascii:
+      _target_: cybulde.data_processing.dataset_cleaners.NonASCIIDatasetCleaner
+    referance:
+      _target_: cybulde.data_processing.dataset_cleaners.ReferanceToAccountDatasetCleaner
+    re_tweet:
+      _target_: cybulde.data_processing.dataset_cleaners.ReTweetDatasetCleaner
+    spell_correction:
+      _target_: cybulde.data_processing.dataset_cleaners.SpellCorrectionDatasetCleaner
+      spell_correction_model:
+        _target_: cybulde.utils.utils.SpellCorrectionModel
+        max_dictionary_edit_distance: 2
+        prefix_length: 7
+        count_threshold: 1
+dask_cluster:
+  _target_: dask.distributed.LocalCluster
+  n_workers: 12
+  memory_limit: auto
+  processes: true
+  threads_per_worker: 1
+  scheduler_port: 8786
+  silence_logs: 30
+  host: null
+  dashboard_address: :8787
+  asynchronous: false
+  blocked_handlers: null
+  service_kwargs: null
+  security: null
+  protocol: null
+  interface: null
+  worker_class: null
+processed_data_save_dir: gs://emkademy/cybulde/data/processed/rebalanced_splits
+run_tag: rebalanced_splits
+docker_image_name: europe-west4-docker.pkg.dev/cybulde/cybulde/cybulde-data-processing
+docker_image_tag: 7b9aca15-70bc-4350-9f3e-6ea126c6b455
