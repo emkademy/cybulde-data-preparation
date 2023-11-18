@@ -19,6 +19,7 @@ services:
       - ~/.config/gcloud/:/home/${USER_NAME}/.config/gcloud
     ports:
       - 8888:8888
+      - 8000:8000
     deploy:
       resources:
         reservations:
@@ -28,5 +29,3 @@ services:
               capabilities: [gpu]
     ipc: host
     init: true
-
-

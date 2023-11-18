@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-tail -F anythoig
+/start-data-processing-service.sh &
+tail -F anything
