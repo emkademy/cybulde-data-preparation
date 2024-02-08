@@ -6,8 +6,6 @@ services:
     hostname: "${HOST_NAME:-emkademy}"
     image: cybulde-data-processing
     container_name: cybulde-data-processing-container
-    environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=./creds/cybulde-b0d2e22dab21.json
     build:
       context: .
       dockerfile: ./docker/Dockerfile
